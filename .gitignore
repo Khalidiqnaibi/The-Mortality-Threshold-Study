@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+.pytest_cache/
+scratch/
+data/*.gz
+data/*.npz
+results/**/*.npz
+results/**/*.npy
+results/smoke/

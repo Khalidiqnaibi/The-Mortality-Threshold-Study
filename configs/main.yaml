@@ -1,0 +1,50 @@
+# Study 6 main configuration (MNIST). Hyperparameters frozen after tuning on the
+# nominal device (s = 0) against train[55000:57000]; see prereg.md.
+dataset: mnist
+
+hp:
+  H: 256
+  T: 0.002
+  dt: 0.25
+  beta: 0.5
+  n_burn_free: 20
+  n_samp_free: 8
+  n_burn_nudge: 8
+  n_samp_nudge: 8
+  n_eval_burn: 30
+  n_eval_samp: 16
+  lr1: 0.5
+  lr2: 0.25
+  wmax1: 1.0
+  wmax2: 2.0
+  wmaxb: 2.0
+  batch: 128
+
+sig: {g: 0.10, o: 0.01, a: 0.10, b: 0.10, c: 0.05, T: 0.10}
+dyn: {sigma_r: 0.01, sigma_prog: 0.02, sigma_w: 0.0005, alpha: 0.10, levels: 0,
+      nu_bar: 0.05, sigma_nu: 0.01}
+
+updates_train: 3000
+chunk: 50
+
+pilot_levels: [0.0, 1.0, 4.0]
+s_levels: [0.0, 0.125, 0.25, 0.5, 1.0, 2.0, 4.0]
+n_teachers: 8
+n_students: 8
+n_robust: 4
+drift_t_ratios: [1, 10, 100, 1000]
+
+transfer_pool: 60000
+transfer_perm_seed: 2026
+distill_levels: [0.5, 1.0, 2.0]   # pilot rule 4 (prereg amendment v2)
+distill_students: 6
+distill_teachers_per_student: 2
+n_transfer: [100, 300, 1000, 3000, 10000, 60000]
+distill_conditions: [soft-random, hard-random, label-random, soft-ported, label-ported]
+updates_distill: 1000
+distill_batch_runs: 40
+
+ablation:
+  s: 1.0                    # pilot: level nearest R = 0.5 (amendment v2)
+  n_teachers: 4
+  n_students: 4
